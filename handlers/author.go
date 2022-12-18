@@ -17,7 +17,8 @@ import (
 // @Description Create a new author
 // @Tags        authors
 // @Accept      json
-// @Param       author body models.CreateModelAuthor true "author body"
+// @Param       author        body   models.CreateModelAuthor true  "author body"
+// @Param       Authorization header string                   false "Authorization"
 // @Produce     json
 // @Success     201 {object} models.JSONRespons{data=string}
 // @Failure     400 {object} models.JSONErrorRespons
@@ -62,7 +63,8 @@ func (h *handler) CreateAuthor(ctx *gin.Context) {
 // @Description get a new author
 // @Tags        authors
 // @Accept      json
-// @Param       id path string true "Article ID"
+// @Param       id            path   string true  "Article ID"
+// @Param       Authorization header string false "Authorization"
 // @Produce     json
 // @Success     200 {object} models.JSONRespons{data=models.Author}
 // @Failure     404 {object} models.JSONErrorRespons
@@ -95,10 +97,11 @@ func (h *handler) GetAuthorById(ctx *gin.Context) {
 // @Tags        authors
 // @Accept      json
 // @Produce     json
-// @Param       offset query    int    false "0"
-// @Param       limit  query    int    false "10"
-// @Param       search query    string false "smth"
-// @Success     200 {object} models.JSONRespons{data=[]models.Author}
+// @Param       offset        query    int    false "0"
+// @Param       limit         query    int    false "10"
+// @Param       search        query    string false "smth"
+// @Param       Authorization header   string false "Authorization"
+// @Success     200           {object} models.JSONRespons{data=[]models.Author}
 // @Router      /v1/author [get]
 func (h *handler) GetAuthorList(ctx *gin.Context) {
 	offsetStr := ctx.DefaultQuery("offset", "0")
@@ -147,7 +150,8 @@ func (h *handler) GetAuthorList(ctx *gin.Context) {
 // @Description Update a new author
 // @Tags        authors
 // @Accept      json
-// @Param       author body models.UpdateAuthorResponse true "updating author"
+// @Param       author        body   models.UpdateAuthorResponse true  "updating author"
+// @Param       Authorization header string                      false "Authorization"
 // @Produce     json
 // @Success     200 {object} models.JSONRespons{data=models.Author}
 // @Failure     400 {object} models.JSONErrorRespons
@@ -195,7 +199,8 @@ func (h *handler) UpdateAuthor(ctx *gin.Context) {
 // @Description delete author
 // @Tags        authors
 // @Accept      json
-// @Param       id path string true "Author ID"
+// @Param       id            path   string true  "Author ID"
+// @Param       Authorization header string false "Authorization"
 // @Produce     json
 // @Success     200 {object} models.JSONRespons{data=models.Author}
 // @Failure     400 {object} models.JSONErrorRespons
