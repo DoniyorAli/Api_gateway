@@ -141,8 +141,8 @@ func (h *handler) GetArticleList(ctx *gin.Context) {
 // @Description Update a new article
 // @Tags        articles
 // @Accept      json
-// @Param       article       body   models.UpdateArticleResponse true  "updating article"
-// @Param       Authorization header string                       false "Authorization"
+// @Param       article       body   models.UpdateArticleModel true  "updating article"
+// @Param       Authorization header string                    false "Authorization"
 // @Produce     json
 // @Success     200 {object} models.JSONRespons{data=models.Article}
 // @Failure     400 {object} models.JSONErrorRespons

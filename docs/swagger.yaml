@@ -101,7 +101,7 @@ definitions:
       message:
         type: string
     type: object
-  models.UpdateArticleResponse:
+  models.UpdateArticleModel:
     properties:
       body:
         type: string
@@ -153,6 +153,10 @@ paths:
         in: query
         name: search
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -181,6 +185,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.CreateModelArticle'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -210,7 +218,11 @@ paths:
         name: article
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateArticleResponse'
+          $ref: '#/definitions/models.UpdateArticleModel'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -241,6 +253,10 @@ paths:
         name: id
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -269,6 +285,10 @@ paths:
         in: path
         name: id
         required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
         type: string
       produces:
       - application/json
@@ -307,6 +327,10 @@ paths:
         in: query
         name: search
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -335,6 +359,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.CreateModelAuthor'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -365,6 +393,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.UpdateAuthorResponse'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -395,6 +427,10 @@ paths:
         name: id
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -423,6 +459,10 @@ paths:
         in: path
         name: id
         required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
         type: string
       produces:
       - application/json

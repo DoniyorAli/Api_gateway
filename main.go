@@ -89,7 +89,7 @@ func MyCORSMiddleware() gin.HandlerFunc {
 	}
 }
 
-//* AuthMyCORSMiddleware ...
+// //* AuthMyCORSMiddleware ...
 func AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token := ctx.GetHeader("Authorization")
