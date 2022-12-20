@@ -74,7 +74,7 @@ func main() {
 
 func MyCORSMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		log.Panicln("MyCORSMiddleware...")
+		log.Println("MyCORSMiddleware...")
 		ctx.Header("Access-Control-Allow-Origin", "*")
 		ctx.Header("Access-Control-Allow-Credentials", "true")
 		ctx.Header("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, PATCH, DELETE")
