@@ -10,6 +10,7 @@ import (
 type GrpcClients struct {
 	Author blogpost.AuthorServiceClient
 	Article blogpost.ArticleServiceClient
+	Auth blogpost.AuthServiceClient
 }
 
 func NewGrpcClients(cfg config.Config) (*GrpcClients, error) {
@@ -25,9 +26,16 @@ func NewGrpcClients(cfg config.Config) (*GrpcClients, error) {
 	}
 	article := blogpost.NewArticleServiceClient(connectArticle)
 
+	connectAuth, err := grpc.Dial(cfg.AuthServiceGrpcHost+cfg.AuthServiceGrpcPort, grpc.WithInsecure())
+	if err != nil {
+		return nil, err
+	}
+	auth := blogpost.NewAuthServiceClient(connectAuth)
+
 
 	return &GrpcClients{
 		Author: author,
 		Article: article,
+		Auth: auth,
 	}, nil
 }

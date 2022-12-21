@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"UacademyGo/Blogpost/api_gateway/clients"
 	"UacademyGo/Blogpost/api_gateway/config"
@@ -51,7 +50,7 @@ func main() {
 
 	v1 := r.Group("/v1")
 	{
-		v1.Use(MyCORSMiddleware(), AuthMiddleware())
+		v1.Use(MyCORSMiddleware(), h.AuthMiddleware())
 		v1.POST("/article", h.CreateArticle)
 		v1.GET("/article/:id", h.GetArticleById)
 		v1.GET("/article", h.GetArticleList)
@@ -83,20 +82,6 @@ func MyCORSMiddleware() gin.HandlerFunc {
 
 		if ctx.Request.Method == "OPTIONS" {
 			ctx.AbortWithStatus(204)
-			return
-		}
-		ctx.Next()
-	}
-}
-
-// //* AuthMyCORSMiddleware ...
-func AuthMiddleware() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		token := ctx.GetHeader("Authorization")
-
-		if token != "MyToken" {
-			ctx.JSON(http.StatusUnauthorized, "Unauthorized")
-			ctx.Abort()
 			return
 		}
 		ctx.Next()
