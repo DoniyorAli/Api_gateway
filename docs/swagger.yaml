@@ -101,6 +101,21 @@ definitions:
       message:
         type: string
     type: object
+  models.LoginModel:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  models.TokenResponse:
+    properties:
+      token:
+        type: string
+    type: object
   models.UpdateArticleModel:
     properties:
       body:
@@ -483,4 +498,70 @@ paths:
       summary: get author by id
       tags:
       - authors
+  /v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Login
+      parameters:
+      - description: Login body
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginModel'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONRespons'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.TokenResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.JSONErrorRespons'
+      summary: Login
+      tags:
+      - authorization (login)
+  /v1/my_articles:
+    get:
+      consumes:
+      - application/json
+      description: get articles
+      parameters:
+      - description: "0"
+        in: query
+        name: offset
+        type: integer
+      - description: "10"
+        in: query
+        name: limit
+        type: integer
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.JSONRespons'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Article'
+                  type: array
+              type: object
+      summary: List articles
+      tags:
+      - articles
 swagger: "2.0"

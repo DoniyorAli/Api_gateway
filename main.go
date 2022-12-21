@@ -46,24 +46,28 @@ func main() {
 		panic(err)
 	}
 
+	defer grpcClients.Close()
+
 	h := handlers.NewHandler(cfg, grpcClients)
 
 	v1 := r.Group("/v1")
 	{
-		v1.Use(MyCORSMiddleware(), h.AuthMiddleware())
-		v1.POST("/article", h.CreateArticle)
-		v1.GET("/article/:id", h.GetArticleById)
-		v1.GET("/article", h.GetArticleList)
-		v1.PUT("/article", h.UpdateArticle)
-		v1.DELETE("/article/:id", h.DeleteArticle)
+		v1.Use(MyCORSMiddleware())
+		v1.POST("/login", h.Login)
+		v1.POST("/article", h.AuthMiddleware("*"), h.CreateArticle)
+		v1.GET("/article/:id", h.AuthMiddleware("*"), h.GetArticleById)
+		v1.GET("/article", h.AuthMiddleware("*"), h.GetArticleList)
+		v1.PUT("/article", h.AuthMiddleware("*"), h.UpdateArticle)
+		v1.DELETE("/article/:id", h.AuthMiddleware("ADMIN"), h.DeleteArticle)
+		v1.GET("/my_articles/:id", h.AuthMiddleware("*"), h.SearchArticleByMyUsername)
 
 		v1.GET("/ping", h.Pong) //*testing example the localhost
 
-		v1.POST("author", h.CreateAuthor)
-		v1.GET("/author/:id", h.GetAuthorById)
-		v1.GET("/author", h.GetAuthorList)
-		v1.PUT("/author", h.UpdateAuthor)
-		v1.DELETE("/author/:id", h.DeleteAuthor)
+		v1.POST("author", h.AuthMiddleware("*"), h.CreateAuthor)
+		v1.GET("/author/:id", h.AuthMiddleware("*"), h.GetAuthorById)
+		v1.GET("/author", h.AuthMiddleware("*"), h.GetAuthorList)
+		v1.PUT("/author", h.AuthMiddleware("*"), h.UpdateAuthor)
+		v1.DELETE("/author/:id", h.AuthMiddleware("ADMIN"), h.DeleteAuthor)
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
